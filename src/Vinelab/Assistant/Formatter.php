@@ -56,7 +56,7 @@ Class Formatter {
 	 * Formats a date into a given pattern - default is d/m/y
 	 * Mostly used when printing
 	 * @param  string $date
-	 * @param  [type] $pattern     your choice of these http://php.net/manual/en/function.date.php
+	 * @param  string $pattern     your choice of these http://php.net/manual/en/function.date.php
 	 * @return string
 	 */
 	public function date($date, $pattern = null)
