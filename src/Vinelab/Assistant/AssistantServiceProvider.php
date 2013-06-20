@@ -1,5 +1,8 @@
 <?php namespace Vinelab\Assistant;
 
+use Vinelab\Assistant\Formatter;
+use Vinelab\Assistant\DeviceDetector;
+
 use Illuminate\Support\ServiceProvider;
 
 class AssistantServiceProvider extends ServiceProvider {
@@ -18,7 +21,25 @@ class AssistantServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app->singleton('vinelab.assistant.formatter', function(){
+			return new Formatter;
+		});
+
+		$this->app->booting(function() {
+
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('Formatter', 'Vinelab\Assistant\Facades\Formatter');
+		});
+
+		$this->app->singleton('vinelab.assistant.devicedetector', function(){
+			return new DeviceDetector;
+		});
+
+		$this->app->booting(function() {
+
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('DeviceDetector', 'Vinelab\Assistant\Facades\DeviceDetector');
+		});
 	}
 
 	/**
