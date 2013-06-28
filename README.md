@@ -52,3 +52,11 @@ It will automatically alias the classes **Formatter** and **DeviceDetector** so 
 	DeviceDetector::whatIs($user_agent); // mobile|browser|bot
 
 ```
+
+### Generator
+
+```php
+<?php
+
+	$uid = Generator::uid(); // 907927051cdd15588d36
+```
