@@ -1,6 +1,7 @@
 {
     "name": "vinelab/assistant",
-    "description": "",
+    "description": "An assistant package consisted of helper classes",
+    "license": "MIT",
     "authors": [
         {
             "name": "Abed Halawi",
