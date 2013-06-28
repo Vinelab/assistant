@@ -40,6 +40,16 @@ class AssistantServiceProvider extends ServiceProvider {
 			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
 			$loader->alias('DeviceDetector', 'Vinelab\Assistant\Facades\DeviceDetector');
 		});
+
+		$this->app->singleton('vinelab.assistant.generator', function(){
+			return new Generator;
+		});
+
+		$this->app->booting(function() {
+
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('Generator', 'Vinelab\Assistant\Facades\Generator');
+		});
 	}
 
 	/**
