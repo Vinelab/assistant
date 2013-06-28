@@ -58,5 +58,6 @@ It will automatically alias the classes **Formatter** and **DeviceDetector** so 
 ```php
 <?php
 
+	// unique identifier that does not exceed 30 chars
 	$uid = Generator::uid(); // 907927051cdd15588d36
 ```
