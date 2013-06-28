@@ -11,7 +11,7 @@ Refer to [vinelab/assistant on packagist.org](https://packagist.org/packages/vin
 
 Edit **app.php** and add ```'Vinelab\Assistant\AssistantServiceProvider',``` to the ```'providers'``` array.
 
-It will automatically alias the classes **Formatter** and **DeviceDetector** so no need to alias it in your **app.php** unless you would like to customize it. In that case edit your **'aliases'** in **app.php** adding ``` 'MyFormatter'	  => 'Vinelab\Assistant\Facades\Formatter',``` and ``` 'MyDeviceDetector'	  => 'Vinelab\Assistant\Facades\DeviceDetector',```
+It will automatically alias the classes **Formatter** and **DeviceDetector** so no need to alias it in your **app.php** unless you would like to customize it. In that case edit your **'aliases'** in **app.php** adding ``` 'MyFormatter'	  => 'Vinelab\Assistant\Facades\Formatter',``` and ``` 'MyDeviceDetector'	  => 'Vinelab\Assistant\Facades\DeviceDetector',``` and ```'MyGenerator' => 'Vinelab\Assistant\Facades\Generator'```
 
 ## Usage
 
