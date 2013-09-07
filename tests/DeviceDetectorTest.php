@@ -86,4 +86,38 @@ Class DeviceDetectorTest extends TestCase {
 		}
 	}
 
+	public function testOS()
+	{
+		$ios = ['iphone','itouch','ipod', 'ipad'];
+		$android = ['android', 'kindle'];
+		$blackberry = ['blackberry'];
+		$windows = ['windows ce', 'iemobile'];
+		$other = ['phone', 'symbian', 'palmos', 'nokia', 'webos'];
+
+		foreach($ios as $dev)
+		{
+			$this->assertEquals('ios', $this->ass->os($dev));
+		}
+
+		foreach($android as $dev)
+		{
+			$this->assertEquals('android', $this->ass->os($dev));
+		}
+
+		foreach($blackberry as $dev)
+		{
+			$this->assertEquals('blackberry', $this->ass->os($dev));
+		}
+
+		foreach($windows as $dev)
+		{
+			$this->assertEquals('windows', $this->ass->os($dev));
+		}
+
+		foreach($other as $dev)
+		{
+			$this->assertEquals('other', $this->ass->os($dev));
+		}
+	}
+
 }

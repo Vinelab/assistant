@@ -63,4 +63,34 @@ Class DeviceDetector {
 			return 'bot';
 		}
 	}
+
+	/**
+	 * Detect the underlying operating system
+	 * @param  string $user_agent
+	 * @return string ios|android|windows|blackberry|other
+	 */
+	public function os($user_agent)
+	{
+		if (preg_match("/iphone|itouch|ipod|ipad/i", $user_agent))
+		{
+			return 'ios';
+		}
+
+		if (preg_match("/android|kindle/i", $user_agent))
+		{
+			return 'android';
+		}
+
+		if (preg_match("/blackberry/i", $user_agent))
+		{
+			return 'blackberry';
+		}
+
+		if (preg_match("/windows ce|iemobile|windows/i", $user_agent))
+		{
+			return 'windows';
+		}
+
+		return 'other';
+	}
 }
