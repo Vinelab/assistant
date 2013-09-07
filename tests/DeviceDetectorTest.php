@@ -88,11 +88,11 @@ Class DeviceDetectorTest extends TestCase {
 
 	public function testOS()
 	{
-		$ios = ['iphone','itouch','ipod', 'ipad'];
-		$android = ['android', 'kindle'];
-		$blackberry = ['blackberry'];
-		$windows = ['windows ce', 'iemobile'];
-		$other = ['phone', 'symbian', 'palmos', 'nokia', 'webos'];
+		$ios = array('iphone','itouch','ipod', 'ipad');
+		$android = array('android', 'kindle');
+		$blackberry = array('blackberry');
+		$windows = array('windows ce', 'iemobile');
+		$other = array('phone', 'symbian', 'palmos', 'nokia', 'webos');
 
 		foreach($ios as $dev)
 		{
