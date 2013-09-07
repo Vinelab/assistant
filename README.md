@@ -51,6 +51,8 @@ It will automatically alias the classes **Formatter** and **DeviceDetector** so 
 
 	DeviceDetector::whatIs($user_agent); // mobile|browser|bot
 
+	DeviceDetector::os($user_agent); // ios|android|blackberry|windows|other
+
 ```
 
 ### Generator
