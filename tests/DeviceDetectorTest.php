@@ -9,7 +9,7 @@ Class DeviceDetectorTest extends TestCase {
 	{
 		$this->ass = new DeviceDetector;
 
-		$this->mobile_browsers = array('phone','iphone','itouch','ipod','symbian','android','htc_','htc-','palmos','blackberry','opera mini','iemobile','windows ce','nokia','fennec','hiptop','kindle','mot ','mot-','webos/','samsung','sonyericsson','sie-','nintendo');
+		$this->mobile_browsers = array('phone','iphone','ipad','itouch','ipod','symbian','android','htc_','htc-','palmos','blackberry','opera mini','iemobile','windows ce','nokia','fennec','hiptop','kindle','mot ','mot-','webos/','samsung','sonyericsson','sie-','nintendo');
 		$this->bots            = array('googlebot','adsbot','yahooseeker','yahoobot','msnbot','watchmouse','pingdom.com','feedfetcher-google');
 		$this->browsers        = array('mozilla/', 'opera/');
 	}
