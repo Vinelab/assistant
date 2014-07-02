@@ -66,4 +66,74 @@ Class Formatter {
 		if (empty($date)) return date($pattern ?: $default_pattern);
 		return !is_null(strtotime($date)) ? date($pattern ?: $default_pattern, strtotime($date)) : null;
 	}
+
+	/**
+     * Transforms a camelCase string to
+     * snake-case.
+     *
+     * @param  string $string
+     * @return string
+     */
+    public static function aliasify($string)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
+
+        $ret = $matches[0];
+
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+
+        return implode('-', $ret);
+    }
+
+    /**
+     * Convert <br> to \n
+     *
+     * @param  string $html
+     * @return string
+     */
+    public static function br2nl($html)
+    {
+        return preg_replace('~<\s*br\s*/?>~', "\n", $html);
+    }
+
+    /**
+     * Convert <div> to <br>
+     *
+     * @param  string $html
+     * @return string
+     */
+    public static function div2br($html)
+    {
+        return preg_replace('~<div>~', "<br>", $html);
+    }
+
+    /**
+     * Transform a normal HTML into
+     * a stripped HTML removing tags and attributes
+     * except the href in anchor tags.
+     *
+     * @param  string $html
+     * @return string
+     */
+    public function cleanHTML($html)
+    {
+        $text = preg_replace('~</(p|div|h[0-9])>~', '</$1><br />', $html);
+
+        $text = $this->div2br($text);
+
+        $text = strip_tags($text, '<a><br><b><strike><u><i>');
+
+        $text = $this->br2nl($text);
+
+        // remove tag attributes except <a>
+        $text = preg_replace('~<(?!a\s)([a-z][a-z0-9]*)[^>]*?(/?)>~i', '<$1$2>', $text);
+        // remove all attributes from <a> except 'href'
+        $text = preg_replace('~<a\s.*(href=.*)>~i', '<a $1>', $text);
+        $text = preg_replace('/class=".*?"/','', $text);
+        $text = preg_replace('/style=".*?"/','', $text);
+
+        return $text;
+    }
 }

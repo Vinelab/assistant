@@ -24,13 +24,25 @@ It will automatically alias the classes **Formatter** and **DeviceDetector** so 
 
 	Formatter::camelify('hakuna matata'); //output: hakunaMatata
 
-	Formatter::neutralize('I hAtE whEn sOmEoNe wRites thInGs LIKE tHiS'); // output: ihatewhensomeonewritesthingslikethis
+	Formatter::neutralize('I hAtE whEn sOmEoNe wRites thInGs LIKE tHiS');
+	// output: ihatewhensomeonewritesthingslikethis
 
 	Formatter::dashit('bash cash slash'); // output: bash-cash-slash
 
 	Formatter::date('10-02-2010 12:13:00'); // output: 10/02/10
 
 	Formatter::date('10-02-2010 12:13:00', 'd-m-y'); // output: 10-02-10
+
+	// Turn a camelCase string into dash-separated string
+	Formatter::aliasify('simpleTest'); // output: simple-test
+
+	Formatter::br2nl('a<br>b'); // output: a\nb
+
+	// Clean up HTML formatting to be saved in the database or used as plain text
+	// keeping links only as anchor tags. Solves an issue with editors when pasting
+	// in text from word processors or web pages. PS: removes all sorts of media.
+	Formatter::cleanHTML('<p>some</p><br><a href="#html">HTML</a><div>cleaned</div><img src="http://come.img" />');
+	// output: some\n\n<a href="#html">HTML</a>\ncleaned\n
 ```
 
 ### DeviceDetector
