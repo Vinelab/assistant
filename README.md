@@ -1,25 +1,39 @@
 [![Build Status](https://travis-ci.org/Vinelab/assistant.png?branch=master)](https://travis-ci.org/Vinelab/assistant)
 
-## Vinelab Assistant Package - Laravel 4
-
+# Assistant
 A bunch of helper classes:
 
-Installation
-------------
+## Installation
 
-Refer to [vinelab/assistant on packagist.org](https://packagist.org/packages/vinelab/assistant) for composer installation instructions.
+### Via Composer
+```json
+{
+     "require": {
+         "vinelab/assistant": "*"
+     }
+ }
+```
 
-Edit **app.php** and add ```'Vinelab\Assistant\AssistantServiceProvider',``` to the ```'providers'``` array.
+#### Laravel
+Edit **app.php** and add `'Vinelab\Assistant\AssistantServiceProvider'` to the `'providers'` array.
 
-It will automatically alias the classes **Formatter** and **DeviceDetector** so no need to alias it in your **app.php** unless you would like to customize it. In that case edit your **'aliases'** in **app.php** adding ``` 'MyFormatter'	  => 'Vinelab\Assistant\Facades\Formatter',``` and ``` 'MyDeviceDetector'	  => 'Vinelab\Assistant\Facades\DeviceDetector',``` and ```'MyGenerator' => 'Vinelab\Assistant\Facades\Generator'```
+It will automatically alias the classes **Formatter**, **DeviceDetector** and **Generator**,
+In case you would like to customize their names, edit the `aliases` array in **app.php** with the following:
+
+```php
+array(
+	'...',
+	'MyFormatter' => 'Vinelab\Assistant\Facades\Formatter',
+	'MyGenerator' => 'Vinelab\Assistant\Facades\Generator',
+	'MyDeviceDetector' => 'Vinelab\Assistant\Facades\DeviceDetector',
+)
+```
 
 ## Usage
 
 ### Formatter
 
 ```php
-<?php
-
 	Formatter::snakify('my word to make a snake'); // output: my_word_to_make_a_snake
 
 	Formatter::camelify('hakuna matata'); //output: hakunaMatata
@@ -48,8 +62,6 @@ It will automatically alias the classes **Formatter** and **DeviceDetector** so 
 ### DeviceDetector
 
 ```php
-<?php
-
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
 	// or in case of laravel
@@ -59,12 +71,13 @@ It will automatically alias the classes **Formatter** and **DeviceDetector** so 
 
 	DeviceDetector::isBrowser($user_agent); // true|false
 
-	DeviceDetector::isBot($user_agent); // true|false
+	DeviceDetector::isBot($user_agent); // true|false - also detects sharing bots
 
-	DeviceDetector::whatIs($user_agent); // mobile|browser|bot
+	DeviceDetector::isSharingBot($user_agent) // true|false
+
+	DeviceDetector::whatIs($user_agent); // mobile|browser|bot|sharing-bot
 
 	DeviceDetector::os($user_agent); // ios|android|blackberry|windows|other
-
 ```
 
 ### Generator

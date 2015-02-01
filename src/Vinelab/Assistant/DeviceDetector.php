@@ -38,7 +38,34 @@ Class DeviceDetector {
 	 */
 	public function isBot($user_agent)
 	{
-        return (Boolean) preg_match ( "/googlebot|adsbot|yahooseeker|yahoobot|msnbot|watchmouse|pingdom\.com|feedfetcher-google/i", $user_agent );
+		$pattern = '/'.$this->getBotPattern().'|'.$this->getSharingBotPattern().'/i';
+
+        return preg_match($pattern, $user_agent) > 0;
+	}
+
+	/**
+	 * Detect whether the visitor is a sharing bot.
+	 * Sharing bots are usually the crawlers from social networks that visit your website
+	 * when it's shared.
+	 *
+	 * @param  string  $user_agent
+	 * @return boolean
+	 */
+	public function isSharingBot($user_agent)
+	{
+		$pattern = '/'.$this->getSharingBotPattern().'/i';
+
+		return preg_match($pattern, $user_agent) > 0;
+	}
+
+	public function getBotPattern()
+	{
+		return 'googlebot|adsbot|yahooseeker|yahoobot|msnbot|watchmouse|pingdom\.com|feedfetcher-google';
+	}
+
+	public function getSharingBotPattern()
+	{
+		return '.*(facebookexternalhit|Yahoo\!|(https:\/\/developers\.google\.com\/\+\/web\/snippet)|Googlebot|Twitterbot|Google\-StructuredDataTestingTool).*';
 	}
 
 	/**
@@ -56,6 +83,11 @@ Class DeviceDetector {
 		if ($this->isBrowser($user_agent))
 		{
 			return 'browser';
+		}
+
+		if ($this->isSharingBot($user_agent))
+		{
+			return 'sharing-bot';
 		}
 
 		if ($this->isBot($user_agent))

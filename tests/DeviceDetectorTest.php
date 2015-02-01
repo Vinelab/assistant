@@ -9,9 +9,54 @@ Class DeviceDetectorTest extends TestCase {
 	{
 		$this->ass = new DeviceDetector;
 
-		$this->mobile_browsers = array('phone','iphone','ipad','itouch','ipod','symbian','android','htc_','htc-','palmos','blackberry','opera mini','iemobile','windows ce','nokia','fennec','hiptop','kindle','mot ','mot-','webos/','samsung','sonyericsson','sie-','nintendo');
-		$this->bots            = array('googlebot','adsbot','yahooseeker','yahoobot','msnbot','watchmouse','pingdom.com','feedfetcher-google');
-		$this->browsers        = array('mozilla/', 'opera/');
+		$this->mobile_browsers = array(
+			'phone',
+			'iphone',
+			'ipad',
+			'itouch',
+			'ipod',
+			'symbian',
+			'android',
+			'htc_',
+			'htc-',
+			'palmos',
+			'blackberry',
+			'opera mini',
+			'iemobile',
+			'windows ce',
+			'nokia',
+			'fennec',
+			'hiptop',
+			'kindle',
+			'mot ',
+			'mot-',
+			'webos/',
+			'samsung',
+			'sonyericsson',
+			'sie-',
+			'nintendo'
+		);
+
+		$this->bots = array(
+			'googlebot',
+			'adsbot',
+			'yahooseeker',
+			'yahoobot',
+			'msnbot',
+			'watchmouse',
+			'pingdom.com',
+			'feedfetcher-google'
+		);
+
+		$this->sharing_bots = array(
+			'facebookexternalhit',
+			'Yahoo!',
+			'Twitterbot',
+			'Google-StructuredDataTestingTool',
+			'https://developers.google.com/+/web/snippet',
+		);
+
+		$this->browsers = array('mozilla/', 'opera/');
 	}
 
 	public function testIsMobile()
@@ -48,17 +93,35 @@ Class DeviceDetectorTest extends TestCase {
 
 	public function testIsBot()
 	{
-		foreach ($this->bots as $bot)
+		foreach ($this->getBots() as $bot)
 		{
-			$this->assertTrue($this->ass->isBot($bot));
+			$this->assertTrue($this->ass->isBot($bot), "Bot: $bot");
 		}
 	}
 
 	public function testIsBotCaseSensitivity()
 	{
-		foreach ($this->bots as $bot)
+		foreach ($this->getBots() as $bot)
 		{
-			$this->assertTrue($this->ass->isBot(strtoupper($bot)));
+			$this->assertTrue($this->ass->isBot(strtoupper($bot)), "Bot: $bot");
+			$this->assertTrue($this->ass->isBot(strtolower($bot)), "Bot: $bot");
+		}
+	}
+
+	public function testSharingBot()
+	{
+		foreach ($this->sharing_bots as $bot)
+		{
+			$this->assertTrue($this->ass->isSharingBot($bot), "Bot: $bot");
+		}
+	}
+
+	public function testSharingBotCaseSensitivity()
+	{
+		foreach ($this->sharing_bots as $bot)
+		{
+			$this->assertTrue($this->ass->isSharingBot(strtoupper($bot)), "Bot: $bot");
+			$this->assertTrue($this->ass->isSharingBot(strtolower($bot)), "Bot: $bot");
 		}
 	}
 
@@ -80,9 +143,17 @@ Class DeviceDetectorTest extends TestCase {
 
 	public function testWhatIsBot()
 	{
-		foreach ($this->bots as $bot)
+		foreach ($this->getBots() as $bot)
 		{
 			$this->assertEquals('bot', $this->ass->whatIs($bot));
+		}
+	}
+
+	public function testWhatIsSharingBot()
+	{
+		foreach ($this->getBots() as $bot)
+		{
+			$this->assertEquals('sharing-bot', $this->ass->whatIs($bot));
 		}
 	}
 
@@ -118,6 +189,11 @@ Class DeviceDetectorTest extends TestCase {
 		{
 			$this->assertEquals('other', $this->ass->os($dev));
 		}
+	}
+
+	protected function getBots()
+	{
+		return array_merge($this->bots, $this->sharing_bots);
 	}
 
 }
