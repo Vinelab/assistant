@@ -38,7 +38,6 @@ Class DeviceDetectorTest extends TestCase {
 		);
 
 		$this->bots = array(
-			'googlebot',
 			'adsbot',
 			'yahooseeker',
 			'yahoobot',
@@ -49,6 +48,7 @@ Class DeviceDetectorTest extends TestCase {
 		);
 
 		$this->sharing_bots = array(
+			'googlebot',
 			'facebookexternalhit',
 			'Yahoo!',
 			'Twitterbot',
@@ -143,17 +143,17 @@ Class DeviceDetectorTest extends TestCase {
 
 	public function testWhatIsBot()
 	{
-		foreach ($this->getBots() as $bot)
+		foreach ($this->bots as $bot)
 		{
-			$this->assertEquals('bot', $this->ass->whatIs($bot));
+			$this->assertEquals('bot', $this->ass->whatIs($bot), "Bot: $bot");
 		}
 	}
 
 	public function testWhatIsSharingBot()
 	{
-		foreach ($this->getBots() as $bot)
+		foreach ($this->sharing_bots as $bot)
 		{
-			$this->assertEquals('sharing-bot', $this->ass->whatIs($bot));
+			$this->assertEquals('sharing-bot', $this->ass->whatIs($bot), "Bot: $bot");
 		}
 	}
 
