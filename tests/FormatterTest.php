@@ -1,13 +1,15 @@
-<?php namespace Vinelab\Assistant\Tests;
+<?php
+
+namespace Vinelab\Assistant\tests;
 
 use Vinelab\Assistant\Formatter;
 use PHPUnit_Framework_TestCase as TestCase;
 
-Class FormatterTest extends TestCase {
-
+class FormatterTest extends TestCase
+{
     public function setUp()
     {
-        $this->ass = new Formatter;
+        $this->ass = new Formatter();
     }
 
     public function testSnakify()
@@ -87,19 +89,18 @@ Class FormatterTest extends TestCase {
     public function test_aliasifying()
     {
         $tests = array(
-          'simpleTest'      => 'simple-test',
-          'easy'            => 'easy',
-          'HTML'            => 'html',
-          'simple XML'       => 'simple-xml',
-          'PDFLoad'         => 'pdf-load',
+          'simpleTest' => 'simple-test',
+          'easy' => 'easy',
+          'HTML' => 'html',
+          'simple XML' => 'simple-xml',
+          'PDFLoad' => 'pdf-load',
           'startMIDDLELast' => 'start-middle-last',
-          'AString'         => 'a-string',
+          'AString' => 'a-string',
           'Some4Numbers234' => 'some4-numbers234',
-          'TEST123String'   => 'test123-string',
+          'TEST123String' => 'test123-string',
         );
 
-        foreach ($tests as $test=>$expected)
-        {
+        foreach ($tests as $test => $expected) {
             $this->assertEquals($expected, $this->ass->aliasify($test));
         }
     }
@@ -112,7 +113,7 @@ Class FormatterTest extends TestCase {
 
     public function testDiv2Br()
     {
-        $expected = "<br> hey there<br>hello";
+        $expected = '<br> hey there<br>hello';
         $this->ass->div2br('<div> hey there<div>hello');
     }
 

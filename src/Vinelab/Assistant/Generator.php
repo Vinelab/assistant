@@ -1,9 +1,11 @@
-<?php namespace Vinelab\Assistant;
+<?php
 
-class Generator {
+namespace Vinelab\Assistant;
 
-	public function uid()
-	{
-		return rand(100, 9999999).uniqid();
-	}
+class Generator
+{
+    public function uid()
+    {
+        return rand(100, 9999999).uniqid();
+    }
 }

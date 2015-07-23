@@ -1,77 +1,92 @@
-<?php namespace Vinelab\Assistant;
+<?php
 
-Class Formatter {
+namespace Vinelab\Assistant;
 
-	/**
-	 * Turn a word into snake_case
-	 * @param  string $word the word to snakify
-	 * @return string
-	 */
-	public function snakify($word)
-	{
-		return strtolower(str_replace(' ', '_', $word));
-	}
+class Formatter
+{
+    /**
+     * Turn a word into snake_case.
+     *
+     * @param string $word the word to snakify
+     *
+     * @return string
+     */
+    public function snakify($word)
+    {
+        return strtolower(str_replace(' ', '_', $word));
+    }
 
-	/**
-	 * Turn a word into CamelCase
-	 * @param  string $word The word to camelify
-	 * @return string
-	 */
-	public function camelify($word)
-	{
-		preg_match('/\s/', $word, $matches, PREG_OFFSET_CAPTURE);
+    /**
+     * Turn a word into CamelCase.
+     *
+     * @param string $word The word to camelify
+     *
+     * @return string
+     */
+    public function camelify($word)
+    {
+        preg_match('/\s/', $word, $matches, PREG_OFFSET_CAPTURE);
 
-		if (count($matches) > 0)
-		{
-			$ending = str_replace(' ','',ucwords(str_replace('_', ' ', substr($word, $matches[0][1]))));
-			$beginning = strtolower(substr($word, 0, $matches[0][1]));
-			return $beginning.$ending;
+        if (count($matches) > 0) {
+            $ending = str_replace(' ', '', ucwords(str_replace('_', ' ', substr($word, $matches[0][1]))));
+            $beginning = strtolower(substr($word, 0, $matches[0][1]));
 
-		} else {
-			return $word;
-		}
-	}
+            return $beginning.$ending;
+        } else {
+            return $word;
+        }
+    }
 
-	/**
-	 * Removes spaces, dashes, dots, commas and underscores from the given string
-	 * @param  string $string
-	 * @return string
-	 */
-	public function neutralize($string)
-	{
-		return preg_replace('/\s|-|\.|,|_/i', '', strtolower($string));
-	}
+    /**
+     * Removes spaces, dashes, dots, commas and underscores from the given string.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function neutralize($string)
+    {
+        return preg_replace('/\s|-|\.|,|_/i', '', strtolower($string));
+    }
 
-	/**
-	 * Turns all spaces into dashes in a string
-	 * @param  string $string
-	 * @return string
-	 */
-	public function dashit($string)
-	{
-		return strtolower(str_replace(' ', '-', $string));
-	}
+    /**
+     * Turns all spaces into dashes in a string.
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function dashit($string)
+    {
+        return strtolower(str_replace(' ', '-', $string));
+    }
 
-	/**
-	 * Formats a date into a given pattern - default is d/m/y
-	 * Mostly used when printing
-	 * @param  string $date
-	 * @param  string $pattern     your choice of these http://php.net/manual/en/function.date.php
-	 * @return string
-	 */
-	public function date($date, $pattern = null)
-	{
-		$default_pattern = 'd/m/y';
+    /**
+     * Formats a date into a given pattern - default is d/m/y
+     * Mostly used when printing.
+     *
+     * @param string $date
+     * @param string $pattern your choice of these http://php.net/manual/en/function.date.php
+     *
+     * @return string
+     */
+    public function date($date, $pattern = null)
+    {
+        $default_pattern = 'd/m/y';
 
-		if (empty($date)) return date($pattern ?: $default_pattern);
-		return !is_null(strtotime($date)) ? date($pattern ?: $default_pattern, strtotime($date)) : null;
-	}
+        if (empty($date)) {
+            return date($pattern ?: $default_pattern);
+        }
 
-	/**
+        return !is_null(strtotime($date)) ? date($pattern ?: $default_pattern, strtotime($date)) : null;
+    }
+
+    /**
      * Transforms a camelCase string to
      * snake-case.
      *
-     * @param  string $string
+     * @param string $string
+     *
      * @return string
      */
     public static function aliasify($string)
@@ -88,9 +103,10 @@ Class Formatter {
     }
 
     /**
-     * Convert <br> to \n
+     * Convert <br> to \n.
      *
-     * @param  string $html
+     * @param string $html
+     *
      * @return string
      */
     public static function br2nl($html)
@@ -99,14 +115,15 @@ Class Formatter {
     }
 
     /**
-     * Convert <div> to <br>
+     * Convert <div> to <br>.
      *
-     * @param  string $html
+     * @param string $html
+     *
      * @return string
      */
     public static function div2br($html)
     {
-        return preg_replace('~<div>~', "<br>", $html);
+        return preg_replace('~<div>~', '<br>', $html);
     }
 
     /**
@@ -114,7 +131,8 @@ Class Formatter {
      * a stripped HTML removing tags and attributes
      * except the href in anchor tags.
      *
-     * @param  string $html
+     * @param string $html
+     *
      * @return string
      */
     public function cleanHTML($html)
@@ -131,8 +149,8 @@ Class Formatter {
         $text = preg_replace('~<(?!a\s)([a-z][a-z0-9]*)[^>]*?(/?)>~i', '<$1$2>', $text);
         // remove all attributes from <a> except 'href'
         $text = preg_replace('~<a\s.*(href=.*)>~i', '<a $1>', $text);
-        $text = preg_replace('/class=".*?"/','', $text);
-        $text = preg_replace('/style=".*?"/','', $text);
+        $text = preg_replace('/class=".*?"/', '', $text);
+        $text = preg_replace('/style=".*?"/', '', $text);
 
         return $text;
     }

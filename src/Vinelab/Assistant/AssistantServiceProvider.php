@@ -1,65 +1,61 @@
-<?php namespace Vinelab\Assistant;
+<?php
 
-use Vinelab\Assistant\Formatter;
-use Vinelab\Assistant\DeviceDetector;
+namespace Vinelab\Assistant;
 
 use Illuminate\Support\ServiceProvider;
 
-class AssistantServiceProvider extends ServiceProvider {
+class AssistantServiceProvider extends ServiceProvider
+{
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Register the service provider.
+     */
+    public function register()
+    {
+        $this->app->singleton('vinelab.assistant.formatter', function () {
+            return new Formatter();
+        });
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app->singleton('vinelab.assistant.formatter', function(){
-			return new Formatter;
-		});
+        $this->app->booting(function () {
 
-		$this->app->booting(function() {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Formatter', 'Vinelab\Assistant\Facades\Formatter');
+        });
 
-			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('Formatter', 'Vinelab\Assistant\Facades\Formatter');
-		});
+        $this->app->singleton('vinelab.assistant.devicedetector', function () {
+            return new DeviceDetector();
+        });
 
-		$this->app->singleton('vinelab.assistant.devicedetector', function(){
-			return new DeviceDetector;
-		});
+        $this->app->booting(function () {
 
-		$this->app->booting(function() {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('DeviceDetector', 'Vinelab\Assistant\Facades\DeviceDetector');
+        });
 
-			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('DeviceDetector', 'Vinelab\Assistant\Facades\DeviceDetector');
-		});
+        $this->app->singleton('vinelab.assistant.generator', function () {
+            return new Generator();
+        });
 
-		$this->app->singleton('vinelab.assistant.generator', function(){
-			return new Generator;
-		});
+        $this->app->booting(function () {
 
-		$this->app->booting(function() {
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Generator', 'Vinelab\Assistant\Facades\Generator');
+        });
+    }
 
-			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('Generator', 'Vinelab\Assistant\Facades\Generator');
-		});
-	}
-
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return array
-	 */
-	public function provides()
-	{
-		return array();
-	}
-
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return array();
+    }
 }
