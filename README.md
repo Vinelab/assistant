@@ -1,11 +1,27 @@
 [![Build Status](https://travis-ci.org/Vinelab/assistant.png?branch=master)](https://travis-ci.org/Vinelab/assistant)
 
 # Assistant
-A bunch of helper classes:
+A bunch of helper classes that provides:
+
+- Device detection (mobile, browser, bot, social network crawlers, etc.)
+- String formatting
+- Generating UUIDs (v4 compliant) and random IDs
+
+> Supports UTF-8 Character sets.
 
 ## Installation
 
-### Via Composer
+### Dependencies
+- php 5.3+
+- mbstring (extension)
+
+### via Composer
+```
+composer require vinelab/assistant
+```
+
+Or add it to your `composer.json`
+
 ```json
 {
      "require": {
@@ -28,8 +44,6 @@ array(
 	'MyDeviceDetector' => 'Vinelab\Assistant\Facades\DeviceDetector',
 )
 ```
-
-## Usage
 
 ### Formatter
 
@@ -83,8 +97,9 @@ array(
 ### Generator
 
 ```php
-<?php
+	// Generate a UUID v4 compliant.
+	$uuid = Generator::uuid();
 
 	// unique identifier that does not exceed 30 chars
-	$uid = Generator::uid(); // 907927051cdd15588d36
+	$id = Generator::randomId(); // 907927051cdd15588d36
 ```
