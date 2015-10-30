@@ -6,6 +6,6 @@ sudo: false
 
 before_script:
   - composer selfupdate
-  - php composer.phar install
+  - composer install
 
 script: phpunit
