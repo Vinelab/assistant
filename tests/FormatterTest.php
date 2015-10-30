@@ -70,6 +70,9 @@ class FormatterTest extends TestCase
 
         $word_with_nothing_really = 'heyyousonofabitch';
         $this->assertEquals('heyyousonofabitch', $this->ass->dashit($word_with_nothing_really));
+
+        $utf8word = 'برديس النسور';
+        $this->assertEquals('برديس-النسور', $this->ass->dashit($utf8word));
     }
 
     public function testDate()
@@ -86,7 +89,7 @@ class FormatterTest extends TestCase
         $this->assertEquals(date('d-m-y', strtotime($db_date_format)), $this->ass->date($db_date_format, 'd-m-y'));
     }
 
-    public function test_aliasifying()
+    public function testAliasifying()
     {
         $tests = array(
           'simpleTest' => 'simple-test',
@@ -98,6 +101,7 @@ class FormatterTest extends TestCase
           'AString' => 'a-string',
           'Some4Numbers234' => 'some4-numbers234',
           'TEST123String' => 'test123-string',
+          'برديسالنسور' => 'برديسالنسور',
         );
 
         foreach ($tests as $test => $expected) {

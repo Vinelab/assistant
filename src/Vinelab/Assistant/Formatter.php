@@ -13,7 +13,7 @@ class Formatter
      */
     public function snakify($word)
     {
-        return strtolower(str_replace(' ', '_', $word));
+        return mb_strtolower(str_replace(' ', '_', $word));
     }
 
     /**
@@ -29,7 +29,7 @@ class Formatter
 
         if (count($matches) > 0) {
             $ending = str_replace(' ', '', ucwords(str_replace('_', ' ', substr($word, $matches[0][1]))));
-            $beginning = strtolower(substr($word, 0, $matches[0][1]));
+            $beginning = mb_strtolower(substr($word, 0, $matches[0][1]));
 
             return $beginning.$ending;
         } else {
@@ -46,7 +46,7 @@ class Formatter
      */
     public function neutralize($string)
     {
-        return preg_replace('/\s|-|\.|,|_/i', '', strtolower($string));
+        return preg_replace('/\s|-|\.|,|_/i', '', mb_strtolower($string));
     }
 
     /**
@@ -58,7 +58,42 @@ class Formatter
      */
     public function dashit($string)
     {
-        return strtolower(str_replace(' ', '-', $string));
+        return mb_strtolower(str_replace(' ', '-', $string));
+    }
+
+    /**
+     * Multi-unicode compliant ucfirst.
+     *
+     * @param  string $string
+     * @param  string $encoding
+     *
+     * @return string
+     */
+    public function ucfirst($string, $encoding = 'UTF-8')
+    {
+        $encoding = mb_internal_encoding($encoding);
+        $strlen = mb_strlen($string, $encoding);
+        $firstChar = mb_substr($string, 0, 1, $encoding);
+        $then = mb_substr($string, 1, $strlen - 1, $encoding);
+
+        return mb_strtoupper($firstChar, $encoding) . $then;
+    }
+
+    /**
+     * Multi-unicode compliant lcfirst.
+     *
+     * @param  string $string
+     * @param  string $encoding
+     *
+     * @return string
+     */
+    public function lcfirst($string, $encoding = 'UTF-8')
+    {
+        $strlen = mb_strlen($string, $encoding);
+        $firstChar = mb_substr($string, 0, 1, $encoding);
+        $then = mb_substr($string, 1, $strlen - 1, $encoding);
+
+        return mb_strtolower($firstChar, $encoding) . $then;
     }
 
     /**
@@ -82,24 +117,28 @@ class Formatter
     }
 
     /**
-     * Transforms a camelCase string to
-     * snake-case.
+     * Transforms a camelCase string to snake-case
      *
      * @param string $string
      *
      * @return string
      */
-    public static function aliasify($string)
+    public function aliasify($string)
     {
-        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
+        preg_match_all('/([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)/', $string, $matches);
 
-        $ret = $matches[0];
-
-        foreach ($ret as &$match) {
-            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        if (strlen($string) > 0 && empty(reset($matches))) {
+            // probably UTF-8 characters?
+            preg_match_all('/^[\x{0600}-\x{06FF}]+/u', $string, $matches);
         }
 
-        return implode('-', $ret);
+        $result = $matches[0];
+
+        foreach ($result as &$match) {
+            $match = ($match == mb_strtoupper($match)) ? mb_strtolower($match) : $this->lcfirst($match);
+        }
+
+        return implode('-', $result);
     }
 
     /**
@@ -109,7 +148,7 @@ class Formatter
      *
      * @return string
      */
-    public static function br2nl($html)
+    public function br2nl($html)
     {
         return preg_replace('~<\s*br\s*/?>~', "\n", $html);
     }
@@ -121,7 +160,7 @@ class Formatter
      *
      * @return string
      */
-    public static function div2br($html)
+    public function div2br($html)
     {
         return preg_replace('~<div>~', '<br>', $html);
     }
