@@ -9,6 +9,7 @@ class FormatterTest extends TestCase
 {
     public function setUp()
     {
+        mb_internal_encoding('UTF-8');
         $this->ass = new Formatter();
     }
 
