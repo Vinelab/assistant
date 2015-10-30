@@ -127,7 +127,8 @@ class Formatter
     {
         preg_match_all('/([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)/', $string, $matches);
 
-        if (strlen($string) > 0 && empty(reset($matches))) {
+        $elements = reset($matches);
+        if (strlen($string) > 0 && empty($elements)) {
             // probably UTF-8 characters?
             preg_match_all('/^[\x{0600}-\x{06FF}]+/u', $string, $matches);
         }
