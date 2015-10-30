@@ -11,7 +11,7 @@ class GeneratorTest extends TestCase
     {
         $g = new Generator();
 
-        $generated = [];
+        $generated = array();
         for ($i = 0; $i < 1000; ++$i) {
             $id = $g->randomId();
 
@@ -30,7 +30,7 @@ class GeneratorTest extends TestCase
     {
         $g = new Generator();
 
-        $generated = [];
+        $generated = array();
         for ($i = 0; $i < 1000; ++$i) {
             $uuid = $g->uuid();
             $this->assertFalse(in_array($uuid, $generated), 'Make sure it is unique among the generated ones.');
