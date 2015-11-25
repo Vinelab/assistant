@@ -33,7 +33,7 @@ class DomainDetector
             $secondLvl = strtoupper($domain[sizeof($domain) - 2]);
 
             // if the secondLvl exists inside the tld array
-            if (array_search($secondLvl, $this->tlds) && (sizeof($domain) > 4)) {
+            if (array_search($secondLvl, $this->tlds) && (sizeof($domain) > 2)) {
                 // get the previous element of the array, which will be our domain's name
                 $domain = $domain[sizeof($domain) - 3];
             } else {
