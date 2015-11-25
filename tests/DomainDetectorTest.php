@@ -19,7 +19,7 @@ class DomainDetectorTest extends TestCase
          *
          * @var array
          */
-        $this->tlds = [
+        $this->tlds = array(
             'AAA',
             'AARP',
             'ABB',
@@ -1128,7 +1128,7 @@ class DomainDetectorTest extends TestCase
             'ZONE',
             'ZUERICH',
             'ZW',
-        ];
+        );
     }
 
     public function testGetDomain()
