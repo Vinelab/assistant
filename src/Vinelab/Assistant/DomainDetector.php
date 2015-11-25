@@ -16,12 +16,14 @@ class DomainDetector
      */
     public function domain($http)
     {
-        if (!empty(parse_url($http)['host'])) {
+        $http = parse_url($http);
+
+        if (!empty($http['host'])) {
             // grab domain with ports (if there are any) and pass it into an array, eg. test.api.najem.com
-            $domain = explode('.', parse_url($http)['host']);
+            $domain = explode('.', $http['host']);
         } else {
-            // grab domain with ports (if there are any) and pass it into an array, eg. dev
-            $domain = explode('.', parse_url($http)['path']);
+            // grab domain with ports (if there are any) and pass it into an array, eg. localhost
+            $domain = explode('.', $http['path']);
         }
 
         // if domain array has one element only
