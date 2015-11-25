@@ -52,7 +52,7 @@ class DomainDetector
      *
      * @var array
      */
-    protected $tlds = [
+    protected $tlds = array(
         'AAA',
         'AARP',
         'ABB',
@@ -1161,5 +1161,5 @@ class DomainDetector
         'ZONE',
         'ZUERICH',
         'ZW',
-    ];
+    );
 }
