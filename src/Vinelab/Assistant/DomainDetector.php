@@ -14,7 +14,7 @@ class DomainDetector
      *
      * @return string
      */
-    public function getDomain($http)
+    public function domain($http)
     {
         if (isset(parse_url($http)['host'])) {
             // grab domain with ports (if there are any) and pass it into an array, eg. test.api.najem.com

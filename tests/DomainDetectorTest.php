@@ -1133,6 +1133,6 @@ class DomainDetectorTest extends TestCase
 
     public function testGetDomain()
     {
-        $this->assertEqual($this->ass->getDomain('test.api.najem.com'), 'najem');
+        $this->assertEqual($this->ass->domain('test.api.najem.com'), 'najem');
     }
 }
