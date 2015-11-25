@@ -20,7 +20,7 @@ class DomainDetector
             // grab domain with ports (if there are any) and pass it into an array, eg. test.api.najem.com
             $domain = explode('.', parse_url($http)['host']);
         } else {
-            // grab domain with ports (if there are any) and pass it into an array, eg. localhost
+            // grab domain with ports (if there are any) and pass it into an array, eg. dev
             $domain = explode('.', parse_url($http)['path']);
         }
 
