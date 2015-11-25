@@ -94,6 +94,18 @@ array(
 	DeviceDetector::os($user_agent); // ios|android|blackberry|windows|other
 ```
 
+### DomainDetector
+
+```php
+	$http = $_SERVER['HTTP_HOST'];
+
+	// or in case of laravel
+	$http = Request::server('HTTP_HOST');
+
+	DomainDetector::getDomain($http); // google
+
+```
+
 ### Generator
 
 ```php
