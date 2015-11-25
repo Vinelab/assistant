@@ -10,15 +10,13 @@ class DomainDetector
     /**
      * Return domain name.
      *
-     * @param string $http
+     * @param  string $http
      *
      * @return string
      */
     public function domain($http)
     {
-        $http = parse_url($http)['host'];
-
-        if (isset($http) === true) {
+        if (!empty(isset(parse_url($http)['host']) === true)) {
             // grab domain with ports (if there are any) and pass it into an array, eg. test.api.najem.com
             $domain = explode('.', parse_url($http)['host']);
         } else {
