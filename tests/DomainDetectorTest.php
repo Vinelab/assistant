@@ -1131,8 +1131,44 @@ class DomainDetectorTest extends TestCase
         );
     }
 
-    public function testGetDomain()
+    public function testDomainWithOneLevelSubdomain()
+    {
+        $this->assertEquals($this->ass->domain('api.najem.com'), 'najem');
+    }
+
+    public function testDomainWithTwoLevelSubdomains()
     {
         $this->assertEquals($this->ass->domain('test.api.najem.com'), 'najem');
     }
+
+    public function testDomainWithOneLevelDomain()
+    {
+        $this->assertEquals($this->ass->domain('najem.com'), 'najem');
+    }
+
+    public function testDomainWithTwoLevelDomains()
+    {
+        $this->assertEquals($this->ass->domain('najem.co.uk'), 'najem');
+    }
+
+    public function testDomainWithOneLevelSubdomainAndOneLevelDomain()
+    {
+        $this->assertEquals($this->ass->domain('api.najem.com'), 'najem');
+    }
+
+    public function testDomainWithTwoLevelsSubdomainsAndOneLevelDomain()
+    {
+        $this->assertEquals($this->ass->domain('test.api.najem.com'), 'najem');
+    }
+
+    public function testDomainWithOneLevelSubdomainAndTwoLevelDomains()
+    {
+        $this->assertEquals($this->ass->domain('api.najem.co.uk'), 'najem');
+    }
+
+    public function testDomainWithTwoLevelSubdomainsAndTwoLevelDomains()
+    {
+        $this->assertEquals($this->ass->domain('test.api.najem.co.uk'), 'najem');
+    }
+
 }
