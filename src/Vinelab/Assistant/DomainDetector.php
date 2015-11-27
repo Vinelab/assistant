@@ -44,7 +44,7 @@ class DomainDetector
             }
         }
 
-        return [$domain, $httpElements];
+        return array($domain, $httpElements);
     }
 
     /**
