@@ -102,7 +102,8 @@ array(
 	// or in case of laravel
 	$http = Request::server('HTTP_HOST');
 
-	DomainDetector::getDomain($http); // eg. test.subdomains.google.co.uk -> google
+	DomainDetector::domain($http); // eg. test.subdomains.google.co.uk -> 'google'
+	DomainDetector::subdomain($http); // eg. test.subdomains.google.co.uk -> ['test', 'subdomains']
 
 ```
 
