@@ -1134,48 +1134,63 @@ class DomainDetectorTest extends TestCase
     public function testDomainWithOneLevelSubdomain()
     {
         $http = array('host' => 'api.najem.com');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['api', 'najem', 'com']]);
     }
 
     public function testDomainWithTwoLevelSubdomains()
     {
         $http = array('host' => 'test.api.najem.com');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['test', 'api', 'najem', 'com']]);
     }
 
     public function testDomainWithOneLevelDomain()
     {
         $http = array('host' => 'najem.com');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['najem', 'com']]);
     }
 
     public function testDomainWithTwoLevelDomains()
     {
         $http = array('host' => 'najem.co.uk');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['najem', 'co', 'uk']]);
     }
 
     public function testDomainWithOneLevelSubdomainAndOneLevelDomain()
     {
         $http = array('host' => 'api.najem.com');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['api', 'najem', 'com']]);
     }
 
     public function testDomainWithTwoLevelsSubdomainsAndOneLevelDomain()
     {
         $http = array('host' => 'test.api.najem.com');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['test', 'api', 'najem', 'com']]);
     }
 
     public function testDomainWithOneLevelSubdomainAndTwoLevelDomains()
     {
         $http = array('host' => 'api.najem.co.uk');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['api', 'najem', 'co', 'uk']]);
     }
 
     public function testDomainWithTwoLevelSubdomainsAndTwoLevelDomains()
     {
         $http = array('host' => 'test.api.najem.co.uk');
-        $this->assertEquals($this->ass->domain($http['host']), 'najem');
+        $this->assertEquals($this->ass->domain($http['host']), ['najem', ['test', 'api', 'najem', 'co', 'uk']]);
+    }
+
+    public function testOneLevelSubdomain()
+    {
+        $this->assertEquals($this->ass->subdomain('api.najem.com'), ['api']);
+    }
+
+    public function testTwoLevelSubdomains()
+    {
+        $this->assertEquals($this->ass->subdomain('stage.api.najem.com'), ['stage', 'api']);
+    }
+
+    public function testThreeLevelSubdomains()
+    {
+        $this->assertEquals($this->ass->subdomain('stage.api.trellis.vinelab.com'), ['stage', 'api', 'trellis']);
     }
 }

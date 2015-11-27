@@ -10,9 +10,9 @@ class DomainDetector
     /**
      * Return domain name.
      *
-     * @param  string $http
+     * @param string $http
      *
-     * @return string
+     * @return array
      */
     public function domain($http)
     {
@@ -20,31 +20,52 @@ class DomainDetector
 
         if (!empty($http['host'])) {
             // grab domain with ports (if there are any) and pass it into an array, eg. test.api.najem.com
-            $domain = explode('.', $http['host']);
+            $httpElements = explode('.', $http['host']);
         } else {
             // grab domain with ports (if there are any) and pass it into an array, eg. localhost
-            $domain = explode('.', $http['path']);
+            $httpElements = explode('.', $http['path']);
         }
 
         // if domain array has one element only
-        if (sizeof($domain) === 1) {
+        if (sizeof($httpElements) === 1) {
             // then that element is the domain's name
-            $domain = $domain[sizeof($domain) - 1];
+            $domain = $httpElements[sizeof($httpElements) - 1];
         } else {
             // get the second element from the end of the array (domains might have two levels at most, eg. co.uk)
-            $secondLvl = strtoupper($domain[sizeof($domain) - 2]);
+            $secondLvl = strtoupper($httpElements[sizeof($httpElements) - 2]);
 
             // if the secondLvl exists inside the tld array
-            if (array_search($secondLvl, $this->tlds) && (sizeof($domain) > 2)) {
+            if (array_search($secondLvl, $this->tlds) && (sizeof($httpElements) > 2)) {
                 // get the previous element of the array, which will be our domain's name
-                $domain = $domain[sizeof($domain) - 3];
+                $domain = $httpElements[sizeof($httpElements) - 3];
             } else {
                 // otherwise, we won't have second level domain and our domain's name will be the second element from the end
-                $domain = $domain[sizeof($domain) - 2];
+                $domain = $httpElements[sizeof($httpElements) - 2];
             }
         }
 
-        return $domain;
+        return [$domain, $httpElements];
+    }
+
+    /**
+     * Return subdomain names.
+     *
+     * @param string $http
+     *
+     * @return array
+     */
+    public function subdomain($http)
+    {
+        // get the domain name
+        $domain = $this->domain($http);
+
+        // number of the element the domain was found on
+        $domainOn = array_search($domain[0], $domain[1]);
+
+        // an array of the subdomains
+        $subDomain = array_slice($domain[1], 0, $domainOn);
+
+        return $subDomain;
     }
 
     /**
@@ -52,7 +73,7 @@ class DomainDetector
      *
      * @var array
      */
-    protected $tlds = array(
+    protected $tlds = [
         'AAA',
         'AARP',
         'ABB',
@@ -1161,5 +1182,5 @@ class DomainDetector
         'ZONE',
         'ZUERICH',
         'ZW',
-    );
+    ];
 }
