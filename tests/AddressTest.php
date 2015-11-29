@@ -2,17 +2,17 @@
 
 namespace Vinelab\Assistant\tests;
 
-use Vinelab\Assistant\DomainDetector;
+use Vinelab\Assistant\Address;
 use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @author Charalampos Raftopoulos <harris@vinelab.com>
  */
-class DomainDetectorTest extends TestCase
+class AddressTest extends TestCase
 {
     public function setUp()
     {
-        $this->ass = new DomainDetector();
+        $this->ass = new Address();
 
         /*
          * An array with the official tlds from ICAAN.
@@ -1192,5 +1192,20 @@ class DomainDetectorTest extends TestCase
     public function testThreeLevelSubdomains()
     {
         $this->assertEquals($this->ass->subdomain('stage.api.trellis.vinelab.com'), array('stage', 'api', 'trellis'));
+    }
+
+    public function testOneLevelTld()
+    {
+        $this->assertEquals($this->ass->tld('api.najem.com'), array('com'));
+    }
+
+    public function testTwoLevelTld()
+    {
+        $this->assertEquals($this->ass->tld('api.najem.co.uk'), array('co', 'uk'));
+    }
+
+    public function testGetHostname()
+    {
+        $this->assertEquals($this->ass->hostname('api.najem.com:8000'), 'api.najem.com');
     }
 }

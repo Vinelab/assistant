@@ -4,7 +4,7 @@ namespace Vinelab\Assistant\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class DomainDetector extends Facade
+class Address extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class DomainDetector extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'vinelab.assistant.domaindetector';
+        return 'vinelab.assistant.address';
     }
 }

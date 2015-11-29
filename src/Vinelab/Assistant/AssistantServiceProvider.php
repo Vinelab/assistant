@@ -48,14 +48,14 @@ class AssistantServiceProvider extends ServiceProvider
             $loader->alias('Generator', 'Vinelab\Assistant\Facades\Generator');
         });
 
-        $this->app->singleton('vinelab.assistant.domaindetector', function () {
-            return new DomainDetector();
+        $this->app->singleton('vinelab.assistant.address', function () {
+            return new Address();
         });
 
         $this->app->booting(function () {
 
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('DomainDetector', 'Vinelab\Assistant\Facades\DomainDetector');
+            $loader->alias('Address', 'Vinelab\Assistant\Facades\Address');
         });
     }
 

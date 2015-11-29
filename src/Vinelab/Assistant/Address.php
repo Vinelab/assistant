@@ -5,7 +5,7 @@ namespace Vinelab\Assistant;
 /**
  * @author Charalampos Raftopoulos <harris@vinelab.com>
  */
-class DomainDetector
+class Address
 {
     /**
      * Return domain name.
@@ -66,6 +66,44 @@ class DomainDetector
         $subDomain = array_slice($domain[1], 0, $domainOn);
 
         return $subDomain;
+    }
+
+    /**
+     * Return top-level domains.
+     *
+     * @param string $http
+     *
+     * @return array
+     */
+    public function tld($http)
+    {
+        // get the domain name
+        $domain = $this->domain($http);
+
+        // number of the element the domain was found on
+        $domainOn = array_search($domain[0], $domain[1]);
+
+        // an array of the tlds
+        $tlds = array_slice($domain[1], $domainOn + 1, $domainOn + 1);
+
+        return $tlds;
+    }
+
+    /**
+     * Return hostname.
+     *
+     * @param string $http
+     *
+     * @return string
+     */
+    public function hostname($http)
+    {
+        $http = parse_url($http);
+
+        // get hostname from the url
+        $hostname = $http['host'];
+
+        return $hostname;
     }
 
     /**
