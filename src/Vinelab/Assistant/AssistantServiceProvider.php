@@ -14,6 +14,16 @@ class AssistantServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * Perform post-registration booting of services.
+     */
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../config/assist.php' => config_path('assist.php'),
+        ], 'assist');
+    }
+
+    /**
      * Register the service provider.
      */
     public function register()

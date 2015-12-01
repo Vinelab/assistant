@@ -10,54 +10,54 @@ class Address
     /**
      * Return domain name.
      *
-     * @param string $http
+     * @param string $url
      *
      * @return array
      */
-    public function domain($http)
+    public function domain($url)
     {
-        $http = parse_url($http);
+        $url = parse_url($url);
 
-        if (!empty($http['host'])) {
+        if (!empty($url['host'])) {
             // grab domain with ports (if there are any) and pass it into an array, eg. test.api.najem.com
-            $httpElements = explode('.', $http['host']);
+            $urlElements = explode('.', $url['host']);
         } else {
             // grab domain with ports (if there are any) and pass it into an array, eg. localhost
-            $httpElements = explode('.', $http['path']);
+            $urlElements = explode('.', $url['path']);
         }
 
         // if domain array has one element only
-        if (sizeof($httpElements) === 1) {
+        if (sizeof($urlElements) === 1) {
             // then that element is the domain's name
-            $domain = $httpElements[sizeof($httpElements) - 1];
+            $domain = $urlElements[sizeof($urlElements) - 1];
         } else {
             // get the second element from the end of the array (domains might have two levels at most, eg. co.uk)
-            $secondLvl = strtoupper($httpElements[sizeof($httpElements) - 2]);
+            $secondLvl = strtoupper($urlElements[sizeof($urlElements) - 2]);
 
             // if the secondLvl exists inside the tld array
-            if (array_search($secondLvl, $this->tlds) && (sizeof($httpElements) > 2)) {
+            if (array_search($secondLvl, $this->tlds) && (sizeof($urlElements) > 2)) {
                 // get the previous element of the array, which will be our domain's name
-                $domain = $httpElements[sizeof($httpElements) - 3];
+                $domain = $urlElements[sizeof($urlElements) - 3];
             } else {
                 // otherwise, we won't have second level domain and our domain's name will be the second element from the end
-                $domain = $httpElements[sizeof($httpElements) - 2];
+                $domain = $urlElements[sizeof($urlElements) - 2];
             }
         }
 
-        return array($domain, $httpElements);
+        return array($domain, $urlElements);
     }
 
     /**
      * Return subdomain names.
      *
-     * @param string $http
+     * @param string $url
      *
      * @return array
      */
-    public function subdomain($http)
+    public function subdomain($url)
     {
         // get the domain name
-        $domain = $this->domain($http);
+        $domain = $this->domain($url);
 
         // number of the element the domain was found on
         $domainOn = array_search($domain[0], $domain[1]);
@@ -71,14 +71,14 @@ class Address
     /**
      * Return top-level domains.
      *
-     * @param string $http
+     * @param string $url
      *
      * @return array
      */
-    public function tld($http)
+    public function tld($url)
     {
         // get the domain name
-        $domain = $this->domain($http);
+        $domain = $this->domain($url);
 
         // number of the element the domain was found on
         $domainOn = array_search($domain[0], $domain[1]);
@@ -92,16 +92,16 @@ class Address
     /**
      * Return hostname.
      *
-     * @param string $http
+     * @param string $url
      *
      * @return string
      */
-    public function hostname($http)
+    public function hostname($url)
     {
-        $http = parse_url($http);
+        $url = parse_url($url);
 
         // get hostname from the url
-        $hostname = $http['host'];
+        $hostname = $url['host'];
 
         return $hostname;
     }
