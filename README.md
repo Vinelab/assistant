@@ -94,6 +94,21 @@ array(
 	DeviceDetector::os($user_agent); // ios|android|blackberry|windows|other
 ```
 
+### Address
+
+```php
+	$http = $_SERVER['HTTP_HOST'];
+
+	// or in case of laravel
+	$http = Request::server('HTTP_HOST');
+
+	Address::domain($http); // eg. test.subdomains.google.co.uk -> 'google'
+	Address::subdomain($http); // eg. test.subdomains.google.co.uk -> ['test', 'subdomains']
+	Address::tld($http); // eg. test.subdomains.google.co.uk -> ['co', 'uk']
+	Address::hostname($http); // eg. test.subdomains.google.co.uk:8000 -> 'test.subdomains.google.co.uk'
+
+```
+
 ### Generator
 
 ```php

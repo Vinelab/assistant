@@ -14,6 +14,16 @@ class AssistantServiceProvider extends ServiceProvider
     protected $defer = false;
 
     /**
+     * Perform post-registration booting of services.
+     */
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../config/assist.php' => config_path('assist.php'),
+        ], 'assist');
+    }
+
+    /**
      * Register the service provider.
      */
     public function register()
@@ -46,6 +56,16 @@ class AssistantServiceProvider extends ServiceProvider
 
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Generator', 'Vinelab\Assistant\Facades\Generator');
+        });
+
+        $this->app->singleton('vinelab.assistant.address', function () {
+            return new Address();
+        });
+
+        $this->app->booting(function () {
+
+            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            $loader->alias('Address', 'Vinelab\Assistant\Facades\Address');
         });
     }
 
